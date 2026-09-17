@@ -1,8 +1,0 @@
-{
-  "name": "forja",
-  "private": true,
-  "version": "0.2.0-alpha",
-  "scripts": {
-    "check": "node scripts/check-project.mjs"
-  }
-}
