@@ -1,68 +1,89 @@
 const MAX_PROMPT=4000;
 const ALLOWED=['index.html','styles.css','script.js'];
 
-function json(res,status,body){
-  res.status(status).setHeader('Content-Type','application/json; charset=utf-8');
-  return res.end(JSON.stringify(body));
+function json(res,status,body){res.status(status).setHeader('Content-Type','application/json; charset=utf-8');return res.end(JSON.stringify(body))}
+function hash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function pick(arr,n){return arr[n%arr.length]}
+function detect(p){
+ const s=p.toLowerCase();
+ if(/hotel|resort|hostal|alojamiento|villa|inn/.test(s))return'Hotel';
+ if(/cafeter|restaurante|pizzer|bar |bistro|bakery|panader|sushi|comida|cocina/.test(s))return'Restaurant';
+ if(/tienda|shop|ecommerce|zapat|ropa|moda|boutique|joyer|producto|reloj|mueble/.test(s))return s.includes('reloj')?'Product':'Commerce';
+ if(/saas|software|app |plataforma|startup|dashboard|analítica|analytics|crm|fintech/.test(s))return'SaaS';
+ if(/fotógraf|fotograf|portfolio|diseñador|ilustrador|arquitect|artista|estudio creativo/.test(s))return'Portfolio';
+ if(/agencia|branding|marketing|creative studio|consultor/.test(s))return'Agency';
+ if(/festival|concierto|evento|conferencia|summit|exposición|exposicion/.test(s))return'Event';
+ if(/reloj|perfume|bicicleta|cámara|camara|auriculares|producto/.test(s))return'Product';
+ return'Landing';
 }
+function direction(p,h){
+ const s=p.toLowerCase();
+ if(/lujo|premium|elegante|exclusiv|sofistic|boutique/.test(s))return'Luxury';
+ if(/minimal|minimalista|japon|sereno|calma|zen/.test(s))return'Minimal';
+ if(/divertid|juguet|colorid|niño|kids|dulce/.test(s))return'Playful';
+ if(/brutal|atrevid|punk|underground|experimental/.test(s))return'Brutal';
+ if(/bold|impact|energ|deport|urbano|street|electrón|electron/.test(s))return'Bold';
+ return pick(['Editorial','Minimal','Bold','Luxury','Playful','Brutal'],h);
+}
+function safeFiles(files){if(!files||typeof files!=='object')throw Error('Respuesta de archivos inválida');const out={};for(const n of ALLOWED)if(typeof files[n]==='string'&&files[n].length<300000)out[n]=files[n];if(!out['index.html'])throw Error('La respuesta no contiene index.html');return out}
 
-function safeFiles(files){
-  if(!files || typeof files!=='object') throw new Error('Respuesta de archivos inválida');
-  const out={};
-  for(const name of ALLOWED){
-    if(typeof files[name]==='string' && files[name].length<250000) out[name]=files[name];
-  }
-  if(!out['index.html']) throw new Error('La respuesta no contiene index.html');
-  return out;
-}
+const themes={
+Editorial:{bg:'#f1eee7',ink:'#181818',accent:'#b34d2e',font:'Georgia,serif',radius:'2px',shadow:'none'},
+Minimal:{bg:'#f3f0e8',ink:'#181a18',accent:'#705b48',font:'Arial,sans-serif',radius:'4px',shadow:'0 20px 50px #00000012'},
+Bold:{bg:'#e9ff4a',ink:'#101010',accent:'#101010',font:'Arial Black,Arial,sans-serif',radius:'0px',shadow:'8px 8px 0 #101010'},
+Luxury:{bg:'#11100f',ink:'#eee7dc',accent:'#c8a96b',font:'Georgia,serif',radius:'0px',shadow:'0 30px 70px #00000066'},
+Playful:{bg:'#fff2dc',ink:'#26202a',accent:'#ff5d8f',font:'Trebuchet MS,sans-serif',radius:'28px',shadow:'0 18px 40px #ff5d8f22'},
+Brutal:{bg:'#f5f5f5',ink:'#090909',accent:'#ff3b16',font:'Arial,sans-serif',radius:'0px',shadow:'12px 12px 0 #090909'}
+};
 
 function fallback(prompt){
-  const p=prompt.replace(/[<>]/g,'').slice(0,240);
-  const lower=p.toLowerCase();
-  let accent='#d66b3d', bg='#f5efe6', ink='#191817';
-  if(lower.includes('jap')||lower.includes('minimal')){accent='#8c5b45';bg='#eee9df'}
-  if(lower.includes('halloween')){accent='#d66b3d';bg='#171317';ink='#f7efe5'}
-  if(lower.includes('hotel')){accent='#9b7650';bg='#eee8dc'}
-  if(lower.includes('tienda')||lower.includes('zapat')){accent='#3158d4';bg='#eef1f7'}
-  return {
-    'index.html':`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${p}</title></head><body><header><div class="logo">FORJA</div><nav>Inicio · Experiencia · Contacto</nav></header><main><div class="tag">DISEÑO FORJADO</div><h1>${p}</h1><p>Una experiencia diseñada alrededor de tu idea, con una identidad propia y una composición pensada para este negocio.</p><button>Descubrir</button></main><section class="cards"><article><b>01</b><h2>Identidad</h2><p>Jerarquía, espacio y detalles coherentes con la propuesta.</p></article><article><b>02</b><h2>Experiencia</h2><p>Contenido organizado para que la visita tenga un propósito claro.</p></article><article><b>03</b><h2>Acción</h2><p>Un siguiente paso visible y natural para el visitante.</p></article></section></body></html>`,
-    'styles.css':`:root{--accent:${accent};--bg:${bg};--ink:${ink}}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif}header{display:flex;justify-content:space-between;align-items:center;padding:28px 6vw;border-bottom:1px solid color-mix(in srgb,var(--ink) 12%,transparent)}.logo{font-weight:900;letter-spacing:.18em}nav{font-size:13px;opacity:.65}main{padding:11vh 8vw 8vh;max-width:1050px}.tag{font-size:11px;letter-spacing:.22em;font-weight:800;color:var(--accent)}h1{font-size:clamp(48px,8vw,100px);line-height:.92;letter-spacing:-.055em;max-width:900px;margin:22px 0}main p{max-width:580px;font-size:18px;line-height:1.65;opacity:.68}button{margin-top:18px;background:var(--ink);color:var(--bg);border:0;border-radius:10px;padding:14px 22px;font-weight:800}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:0 8vw 10vh}.cards article{padding:28px;background:color-mix(in srgb,var(--bg) 75%,white);border:1px solid color-mix(in srgb,var(--ink) 10%,transparent);border-radius:18px;box-shadow:0 18px 45px #0000000d}.cards b{color:var(--accent);font-size:11px}.cards h2{margin-bottom:5px}.cards p{opacity:.6;line-height:1.5}@media(max-width:700px){header{padding:20px 5vw}nav{display:none}.cards{grid-template-columns:1fr;padding:0 5vw 8vh}main{padding:8vh 5vw 6vh}}`,
-    'script.js':`document.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{b.textContent='Listo ✓';setTimeout(()=>b.textContent='Descubrir',1200)}));`
-  };
+ const h=hash(prompt), archetype=detect(prompt), direction=direction(prompt,h), t=themes[direction];
+ const title=prompt.replace(/[<>]/g,'').slice(0,180);
+ let html='', css='', js='';
+ const nav=`<header class="nav"><div class="logo">FORJA</div><nav><a href="#main">Inicio</a><a href="#featured">Destacado</a><a href="#contact">Contacto</a></nav><button class="navbtn">Explorar</button></header>`;
+ const footer=`<footer id="contact"><span>FORJA / ${archetype.toUpperCase()}</span><span>Hecho para esta idea.</span></footer>`;
+ if(archetype==='Commerce'){
+  html=`${nav}<main id="main" class="shop"><div class="shopintro"><span class="kicker">NUEVA COLECCIÓN</span><h1>${title}</h1><p>Selección curada, detalles precisos y una experiencia de compra construida alrededor de la marca.</p><button class="cta">Ver colección →</button></div><section id="featured" class="products"><div class="sectionhead"><h2>Destacados</h2><span>01 — 06</span></div><div class="productgrid"><article><div class="pic p1">01</div><h3>Modelo Norte</h3><p>Edición diaria · $148</p></article><article><div class="pic p2">02</div><h3>Modelo Forma</h3><p>Serie limitada · $192</p></article><article><div class="pic p3">03</div><h3>Modelo Cero</h3><p>Esencial · $120</p></article><article><div class="pic p4">04</div><h3>Modelo Línea</h3><p>Nuevo · $175</p></article></div></section></main>${footer}`;
+ } else if(archetype==='Restaurant'){
+  html=`${nav}<main id="main" class="restaurant"><section class="resthero"><div><span class="kicker">ABIERTO HOY · 08:00 — 23:00</span><h1>${title}</h1><p>Una experiencia alrededor del sabor, el espacio y el momento.</p><button class="cta">Reservar una mesa</button></div><div class="dish">皿</div></section><section id="featured" class="menu"><div><span class="kicker">MENÚ</span><h2>Pequeños rituales,<br>grandes sabores.</h2></div><div class="menuitems"><article><span>01</span><b>Especial de la casa</b><strong>$18</strong><p>Ingredientes de temporada y preparación lenta.</p></article><article><span>02</span><b>Plato del día</b><strong>$24</strong><p>Una composición que cambia con el mercado.</p></article><article><span>03</span><b>Dulce final</b><strong>$12</strong><p>Ligero, preciso y hecho en casa.</p></article></div></section></main>${footer}`;
+ } else if(archetype==='Hotel'){
+  html=`${nav}<main id="main" class="hotel"><section class="hotelhero"><div class="heroimage"><span>MAR / 01</span></div><div class="hotelcopy"><span class="kicker">TU PRÓXIMO DESTINO</span><h1>${title}</h1><p>Habitaciones silenciosas, luz natural y una estancia diseñada para desconectar.</p><button class="cta">Comprobar disponibilidad</button></div></section><section id="featured" class="rooms"><div class="sectionhead"><h2>Habitaciones</h2><span>Elegir estancia</span></div><article><div><span>SUITE 01</span><h3>Vista abierta</h3><p>Terraza privada · desayuno · acceso al spa</p></div><b>Desde $280</b></article><article><div><span>ROOM 02</span><h3>Jardín</h3><p>Calma, sombra y espacio para quedarse.</p></div><b>Desde $210</b></article></section></main>${footer}`;
+ } else if(archetype==='SaaS'){
+  html=`${nav}<main id="main" class="saas"><section class="saashero"><div class="kicker">OPERACIONES / 2026</div><h1>${title}</h1><p>Convierte datos dispersos en decisiones claras con una plataforma creada para equipos que necesitan avanzar.</p><button class="cta">Probar gratis →</button></section><section id="featured" class="dashboard"><div class="dashbar"><span>OVERVIEW</span><span>LIVE</span></div><div class="metric"><small>INGRESOS</small><strong>$284,920</strong><span>+18.4% este mes</span></div><div class="chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="dashcards"><article><small>Conversión</small><b>8.42%</b></article><article><small>Clientes activos</small><b>12,840</b></article><article><small>Tiempo ahorrado</small><b>1,248h</b></article></div></section></main>${footer}`;
+ } else if(archetype==='Portfolio'){
+  html=`${nav}<main id="main" class="portfolio"><span class="kicker">PORTFOLIO / SELECTED WORK</span><h1>${title}</h1><div class="work"><article><div class="workimg w1">A</div><h2>Casa / 2026</h2><p>Dirección visual · Fotografía</p></article><article><div class="workimg w2">B</div><h2>Materia / 2026</h2><p>Identidad · Editorial</p></article><article><div class="workimg w3">C</div><h2>Luz / 2025</h2><p>Campaña · Arte</p></article></div></main>${footer}`;
+ } else if(archetype==='Agency'){
+  html=`${nav}<main id="main" class="agency"><section><span class="kicker">CREATIVE PRACTICE</span><h1>${title}</h1><p class="manifesto">Construimos marcas que tienen algo que decir, algo que mostrar y una razón para ser recordadas.</p><button class="cta">Ver nuestro trabajo ↗</button></section><section id="featured" class="cases"><article><span>01</span><h2>Identidad de marca</h2><b>Strategy · Design · Digital</b></article><article><span>02</span><h2>Experiencia digital</h2><b>UX · Product · Motion</b></article><article><span>03</span><h2>Campaña global</h2><b>Art direction · Film</b></article></section></main>${footer}`;
+ } else if(archetype==='Event'){
+  html=`${nav}<main id="main" class="event"><section class="eventhero"><span class="date">18—20 / 10 / 2026</span><h1>${title}</h1><p>Una reunión de ideas, música, personas y experiencias.</p><button class="cta">Conseguir entrada</button></section><section id="featured" class="schedule"><div class="sectionhead"><h2>Agenda</h2><span>3 días</span></div><div><time>18:00</time><b>Opening / Main Stage</b><span>01</span></div><div><time>20:30</time><b>Live Session / Studio</b><span>02</span></div><div><time>23:00</time><b>Night / After</b><span>03</span></div></section></main>${footer}`;
+ } else if(archetype==='Product'){
+  html=`${nav}<main id="main" class="product"><section class="producthero"><div class="object">◒</div><div><span class="kicker">OBJETO / 01</span><h1>${title}</h1><p>Una pieza diseñada para durar. Materiales precisos, proporciones cuidadas y una historia propia.</p><strong class="price">$1,280</strong><button class="cta">Añadir a colección</button></div></section><section id="featured" class="specs"><div><span>MATERIAL</span><b>Acero / cristal</b></div><div><span>DIMENSIONES</span><b>42 × 36 × 12 mm</b></div><div><span>EDICIÓN</span><b>240 unidades</b></div></section></main>${footer}`;
+ } else {
+  html=`${nav}<main id="main" class="landing"><section class="landhero"><span class="kicker">UNA NUEVA DIRECCIÓN</span><h1>${title}</h1><p>Una experiencia digital construida específicamente alrededor de tu idea.</p><button class="cta">Descubrir →</button></section><section id="featured" class="feature"><div class="big">FORJA</div><div><span class="kicker">LA IDEA</span><h2>Menos plantilla.<br>Más intención.</h2><p>Contenido, estructura y detalles elegidos para que el sitio tenga personalidad propia.</p></div></section></main>${footer}`;
+ }
+ css=`:root{--bg:${t.bg};--ink:${t.ink};--accent:${t.accent};--font:${t.font};--radius:${t.radius};--shadow:${t.shadow}}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.45}.nav{display:flex;align-items:center;justify-content:space-between;padding:28px 5vw;border-bottom:1px solid color-mix(in srgb,var(--ink) 18%,transparent);position:relative;z-index:2}.logo{font-family:Arial,sans-serif;font-weight:900;letter-spacing:.18em}.nav nav{display:flex;gap:28px}.nav a{color:inherit;text-decoration:none;font-size:12px;opacity:.7}.navbtn,.cta{border:1px solid var(--ink);background:var(--ink);color:var(--bg);padding:13px 18px;border-radius:var(--radius);font-weight:800;cursor:pointer}.kicker{font-size:10px;letter-spacing:.2em;font-weight:900;color:var(--accent);text-transform:uppercase}.shop{padding:8vw 6vw}.shopintro{max-width:950px;padding:4vw 0 10vw}.shopintro h1{font-size:clamp(54px,9vw,130px);line-height:.88;letter-spacing:-.065em;margin:20px 0}.shopintro p{max-width:500px;font-size:18px;opacity:.65}.products{border-top:2px solid var(--ink);padding-top:24px}.sectionhead{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px}.sectionhead h2{font-size:38px;margin:0}.productgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.pic{height:360px;display:grid;place-items:center;font-size:60px;background:color-mix(in srgb,var(--accent) 18%,var(--bg));border-radius:var(--radius);box-shadow:var(--shadow)}.p2{height:300px}.p3{height:400px}.p4{height:330px}.productgrid h3{margin:12px 0 2px}.productgrid p{margin:0;opacity:.55;font-size:12px}.restaurant{padding:5vw 6vw}.resthero{min-height:650px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:5vw}.resthero h1{font-size:clamp(55px,8vw,120px);line-height:.9;letter-spacing:-.06em;margin:20px 0}.resthero p{max-width:450px;font-size:18px;opacity:.65}.dish{height:540px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--bg));display:grid;place-items:center;font-size:150px;box-shadow:var(--shadow)}.menu{border-top:1px solid var(--ink);padding:70px 0;display:grid;grid-template-columns:1fr 1fr;gap:8vw}.menu h2{font-size:55px;line-height:.95}.menuitems article{display:grid;grid-template-columns:35px 1fr auto;gap:10px;padding:22px 0;border-bottom:1px solid color-mix(in srgb,var(--ink) 22%,transparent)}.menuitems p{grid-column:2/4;margin:0;opacity:.55}.hotel{padding:5vw 6vw}.hotelhero{display:grid;grid-template-columns:1.35fr .65fr;min-height:700px}.heroimage{background:linear-gradient(150deg,color-mix(in srgb,var(--accent) 50%,var(--bg)),var(--ink));padding:30px;color:var(--bg);font-size:12px}.hotelcopy{padding:7vw 4vw;align-self:center}.hotelcopy h1{font-size:clamp(50px,7vw,100px);line-height:.9;margin:20px 0}.hotelcopy p{opacity:.65;font-size:17px}.rooms{border-top:1px solid var(--ink);padding:30px 0}.rooms article{display:flex;justify-content:space-between;align-items:center;padding:32px 0;border-bottom:1px solid #999}.rooms h3{font-size:42px;margin:7px 0}.rooms article p{opacity:.55}.saas{padding:7vw 6vw}.saashero{max-width:900px}.saashero h1{font-family:Arial,sans-serif;font-size:clamp(55px,8vw,120px);line-height:.86;letter-spacing:-.07em;margin:22px 0}.saashero p{font-size:20px;max-width:650px;opacity:.65}.dashboard{margin-top:90px;background:#fff;color:#111;border:2px solid #111;border-radius:18px;padding:22px;box-shadow:var(--shadow);max-width:1050px}.dashbar{display:flex;justify-content:space-between;border-bottom:1px solid #ddd;padding-bottom:15px;font:11px Arial}.metric{padding:55px 20px 20px}.metric small,.metric span{display:block;color:#777;font:11px Arial}.metric strong{display:block;font:72px Arial;font-weight:900;letter-spacing:-.06em;margin:10px 0}.chart{height:190px;display:flex;align-items:end;gap:10px;padding:10px 20px;border-bottom:1px solid #ddd}.chart i{flex:1;background:#111;min-height:30px}.chart i:nth-child(1){height:35%}.chart i:nth-child(2){height:50%}.chart i:nth-child(3){height:42%}.chart i:nth-child(4){height:68%}.chart i:nth-child(5){height:55%}.chart i:nth-child(6){height:82%}.chart i:nth-child(7){height:100%}.dashcards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.dashcards article{padding:20px;background:#f1f1f1;border-radius:10px}.dashcards small{display:block;color:#777}.dashcards b{font-size:24px}.portfolio{padding:7vw 6vw}.portfolio h1{font-size:clamp(55px,9vw,140px);line-height:.85;letter-spacing:-.07em;max-width:1050px;margin:20px 0 100px}.work{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:start}.work article:nth-child(3){grid-column:1/3}.workimg{height:460px;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:100px;box-shadow:var(--shadow)}.w2{height:330px;background:var(--accent)}.w3{height:520px}.work h2{margin:12px 0 0}.work p{opacity:.55;margin-top:3px}.agency{padding:8vw 6vw}.agency h1{font-size:clamp(60px,10vw,150px);line-height:.8;letter-spacing:-.08em;max-width:1100px;margin:20px 0}.manifesto{font-size:clamp(25px,3vw,42px);max-width:760px}.cases{margin-top:130px;border-top:4px solid var(--ink)}.cases article{display:grid;grid-template-columns:70px 1fr auto;align-items:center;padding:35px 0;border-bottom:2px solid var(--ink)}.cases h2{font-size:42px;margin:0}.event{padding:0 6vw}.eventhero{min-height:720px;display:flex;flex-direction:column;justify-content:center;max-width:1100px}.date{font:12px Arial;letter-spacing:.2em}.eventhero h1{font-family:Arial Black,Arial,sans-serif;font-size:clamp(65px,11vw,170px);line-height:.78;letter-spacing:-.09em;margin:25px 0}.eventhero p{font-size:20px;max-width:550px}.schedule{border-top:3px solid var(--ink);padding:25px 0 80px}.schedule>div:not(.sectionhead){display:grid;grid-template-columns:120px 1fr 50px;padding:24px 0;border-bottom:1px solid var(--ink);font-size:18px}.product{padding:7vw 6vw}.producthero{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:center;min-height:720px}.object{height:520px;background:color-mix(in srgb,var(--accent) 18%,var(--bg));display:grid;place-items:center;font-size:260px;box-shadow:var(--shadow)}.producthero h1{font-size:clamp(55px,7vw,105px);line-height:.88;letter-spacing:-.065em}.producthero p{font-size:18px;opacity:.65}.price{display:block;font-size:26px;margin:25px 0}.specs{border-top:1px solid var(--ink);display:grid;grid-template-columns:repeat(3,1fr);padding:35px 0}.specs span{display:block;font-size:10px;letter-spacing:.18em;opacity:.55}.specs b{display:block;margin-top:10px}.landing{padding:8vw 6vw}.landhero{min-height:650px;display:flex;flex-direction:column;justify-content:center}.landhero h1{font-size:clamp(55px,9vw,135px);line-height:.86;letter-spacing:-.07em;max-width:1000px}.landhero p{font-size:20px;max-width:580px;opacity:.65}.feature{border-top:2px solid var(--ink);padding:60px 0;display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:center}.feature .big{font-size:18vw;font-weight:900;letter-spacing:-.1em}.feature h2{font-size:60px;line-height:.9}footer{border-top:1px solid color-mix(in srgb,var(--ink) 25%,transparent);padding:24px 6vw;display:flex;justify-content:space-between;font:10px Arial;letter-spacing:.1em}button{font-family:inherit}@media(max-width:800px){.productgrid{grid-template-columns:1fr 1fr}.resthero,.menu,.hotelhero,.producthero,.feature{grid-template-columns:1fr}.dish{height:330px}.work{grid-template-columns:1fr}.work article:nth-child(3){grid-column:auto}.cases article{grid-template-columns:40px 1fr}.cases b{display:none}.specs,.dashcards{grid-template-columns:1fr}.nav nav{display:none}}@media(max-width:550px){.productgrid{grid-template-columns:1fr}.navbtn{display:none}.shopintro h1,.resthero h1,.saashero h1{font-size:55px}.heroimage{min-height:350px}.rooms h3{font-size:30px}.eventhero h1{font-size:70px}.producthero h1{font-size:55px}}`;
+ js=`document.querySelectorAll('.cta,.navbtn').forEach(b=>b.addEventListener('click',()=>{const old=b.textContent;b.textContent='Listo ✓';setTimeout(()=>b.textContent=old,1100)}));`;
+ return {files:{'index.html':html,'styles.css':css,'script.js':js},meta:{archetype,direction,hash:h,version:'0.4.0-alpha'},source:'fallback'};
 }
 
 async function callProvider(prompt){
-  const base=process.env.AI_BASE_URL;
-  const key=process.env.AI_API_KEY;
-  const model=process.env.AI_MODEL;
-  if(!base || !key || !model) return null;
-  const system=`Eres el generador web de FORJA. Devuelve SOLO JSON válido con esta forma: {"title":"string","files":{"index.html":"string","styles.css":"string","script.js":"string"}}. Genera una web completa, específica para el negocio descrito. No uses markdown fences. Solo puedes crear esos tres archivos. El HTML debe ser autocontenido estructuralmente y enlazar styles.css y script.js. Evita diseños genéricos. Usa contenido realista y coherente.`;
-  const response=await fetch(base.replace(/\/$/, '')+'/chat/completions',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-    body:JSON.stringify({model,temperature:0.7,messages:[{role:'system',content:system},{role:'user',content:prompt}]})
-  });
-  if(!response.ok) throw new Error('Proveedor IA HTTP '+response.status);
-  const data=await response.json();
-  const content=data?.choices?.[0]?.message?.content;
-  if(typeof content!=='string') throw new Error('El proveedor no devolvió contenido');
-  const clean=content.replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim();
-  const parsed=JSON.parse(clean);
-  return safeFiles(parsed.files);
+ const base=process.env.AI_BASE_URL,key=process.env.AI_API_KEY,model=process.env.AI_MODEL;
+ if(!base||!key||!model)return null;
+ const system=`Eres FORJA, un Web Architect + UI/UX Designer + Frontend Engineer. Analiza el negocio antes de diseñar. Devuelve SOLO JSON válido: {"title":"string","archetype":"string","direction":"string","files":{"index.html":"string","styles.css":"string","script.js":"string"}}. Los archivos deben formar una web completa y específica. El arquetipo puede ser commerce, restaurant, hotel, saas, portfolio, agency, event o product. La dirección puede ser editorial, minimal, bold, luxury, playful o brutal. No uses el mismo patrón hero+3cards por defecto. La arquitectura debe corresponder al negocio. Solo crea los tres archivos permitidos. No uses markdown fences.`;
+ const r=await fetch(base.replace(/\/$/,'')+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model,temperature:.85,messages:[{role:'system',content:system},{role:'user',content:prompt}]})});
+ if(!r.ok)throw Error('Proveedor IA HTTP '+r.status);
+ const d=await r.json(),c=d?.choices?.[0]?.message?.content;if(typeof c!=='string')throw Error('Proveedor no devolvió contenido');
+ const parsed=JSON.parse(c.replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim());
+ return {files:safeFiles(parsed.files),meta:{archetype:parsed.archetype||'AI',direction:parsed.direction||'AI',version:'0.4.0-alpha'},source:'ai'};
 }
 
 export default async function handler(req,res){
-  if(req.method!=='POST') return json(res,405,{error:'Método no permitido'});
-  try{
-    const body=typeof req.body==='string'?JSON.parse(req.body):req.body||{};
-    const prompt=String(body.prompt||'').trim();
-    if(!prompt) return json(res,400,{error:'Escribe una idea para la web'});
-    if(prompt.length>MAX_PROMPT) return json(res,400,{error:'La idea es demasiado larga'});
-    let files=await callProvider(prompt);
-    let source='ai';
-    if(!files){files=fallback(prompt);source='fallback'}
-    return json(res,200,{title:prompt,files,source});
-  }catch(e){
-    return json(res,500,{error:e.message||'Error interno de generación'});
-  }
+ if(req.method!=='POST')return json(res,405,{error:'Método no permitido'});
+ try{
+  const body=typeof req.body==='string'?JSON.parse(req.body):req.body||{},p=String(body.prompt||'').trim();
+  if(!p)return json(res,400,{error:'Escribe una idea para la web'});
+  if(p.length>MAX_PROMPT)return json(res,400,{error:'La idea es demasiado larga'});
+  const result=await callProvider(p)||fallback(p);
+  return json(res,200,{title:p,files:result.files,meta:result.meta,source:result.source});
+ }catch(e){return json(res,500,{error:e.message||'Error interno'})}
 }

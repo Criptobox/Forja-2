@@ -1,9 +1,9 @@
 {
   "name": "FORJA",
-  "version": "0.3.0-alpha",
-  "from": "v0.2.0-alpha desplegable — interfaz real con generación simulada",
-  "to": "v0.3.0-alpha — arquitectura de generación real + API serverless + provider abstraction + preview real",
-  "next_version": "v0.4.0-alpha",
-  "next_from": "v0.3.0-alpha",
-  "next_to": "shell funcional + Project Engine inicial"
+  "version": "0.4.0-alpha",
+  "from": "v0.3.0-alpha — generación real preparada, pero fallback con diseños demasiado parecidos",
+  "to": "v0.4.0-alpha — Design Diversity Engine + arquetipos de negocio + direcciones visuales + layouts radicalmente distintos + Project Engine inicial",
+  "next_version": "v0.5.0-alpha",
+  "next_from": "v0.4.0-alpha",
+  "next_to": "Project Engine completo + archivos persistentes + editor"
 }

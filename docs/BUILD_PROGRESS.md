@@ -1,46 +1,48 @@
 # FORJA — BUILD PROGRESS
 
-## v0.3.0-alpha
+## v0.4.0-alpha
 
-**FROM:** `v0.2.0-alpha desplegable` — interfaz funcionando, pero generación simulada.
+**FROM:** `v0.3.0-alpha` — generación funcional, pero el fallback producía estructuras demasiado parecidas.
 
-**TO:** `v0.3.0-alpha` — primera arquitectura de generación real + API serverless + provider abstraction + preview real.
+**TO:** `v0.4.0-alpha` — motor de diversidad visual con arquetipos, direcciones artísticas y layouts diferentes.
 
-### Completado
+### Cambios visibles
 
-- [x] Home real.
-- [x] Prompt único.
-- [x] Web Studio.
-- [x] Mascota-persona visible.
-- [x] Pipeline visual.
-- [x] API serverless `/api/generate`.
-- [x] Abstracción de proveedor IA mediante variables de entorno.
-- [x] Fallback local para probar el flujo sin API.
-- [x] Generación de archivos HTML/CSS/JS.
-- [x] Preview real mediante iframe `srcdoc`.
-- [x] Validación básica de archivos devueltos por IA.
-- [x] Separación del backend y secretos.
-- [x] Exportación del resultado generado como ZIP desde el navegador.
-- [x] Documentación de configuración Vercel.
+- [x] Tienda: catálogo/product grid.
+- [x] Restaurante/cafetería: menú + reservas + editorial.
+- [x] Hotel: booking-style hero + habitaciones.
+- [x] SaaS: dashboard/product-led.
+- [x] Portfolio: composición editorial.
+- [x] Agencia: case studies.
+- [x] Evento: agenda + registro.
+- [x] Landing/producto: storytelling + CTA.
+- [x] Variaciones de paleta, tipografía, radios y densidad.
+- [x] Variaciones de navegación.
+- [x] Variaciones de hero.
+- [x] Variaciones de sección y cards.
+- [x] Selección determinista según prompt para que la misma idea sea reproducible.
+- [x] Metadatos de dirección visual visibles en Web Studio.
+- [x] Preview real.
+- [x] Export ZIP.
 
-### Aún no completado
+### Aún pendiente
 
+- [ ] IA decide automáticamente el arquetipo con análisis semántico avanzado.
+- [ ] Generación de múltiples conceptos antes de elegir.
+- [ ] Design system persistente.
 - [ ] Project Engine persistente.
-- [ ] Editor de código real.
-- [ ] Terminal sandbox.
-- [ ] Browser QA real.
-- [ ] Screenshot/visual QA real.
-- [ ] Design Engine avanzado.
-- [ ] Memoria de proyecto.
-- [ ] GitHub integrado.
-- [ ] Control de ramas.
-- [ ] QA automático completo.
-- [ ] Mascota animada final.
+- [ ] Editor de código.
+- [ ] Browser QA.
+- [ ] Screenshot QA.
+- [ ] GitHub.
+- [ ] Branches.
+- [ ] Memoria.
 
 ## Historial
 
 | Versión | FROM | TO |
 |---|---|---|
-| 0.1.0-alpha | proyecto inexistente | base + documentación + identidad |
-| 0.2.0-alpha | base | interfaz web desplegable |
-| 0.3.0-alpha | interfaz con generación simulada | generación real preparada + preview real |
+| 0.1.0-alpha | inexistente | base |
+| 0.2.0-alpha | base | interfaz desplegable |
+| 0.3.0-alpha | interfaz simulada | generación real preparada |
+| **0.4.0-alpha** | generación demasiado repetitiva | **diversidad visual real** |

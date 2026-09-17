@@ -1,8 +1,8 @@
 {
   "name": "forja-ia",
-  "version": "0.3.0-alpha",
+  "version": "0.4.0-alpha",
   "private": true,
-  "description": "FORJA — AI Web Builder",
+  "description": "FORJA — AI Web Builder / visual diversity engine",
   "scripts": {
     "check": "node scripts/check-project.mjs"
   },

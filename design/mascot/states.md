@@ -1,10 +1,12 @@
-# MASCOT STATES
+# FORJA MASCOT STATES
 
-Thinking — persona sentada, mano en barbilla.
-Planning — persona observando la pieza.
-Building — persona trabajando sobre el yunque.
-Tool — persona usando una herramienta.
-Reviewing — persona inspeccionando.
-Complete — persona junto a la pieza terminada.
+El mismo personaje debe aparecer en todos los estados.
 
-La PERSONA debe aparecer en todos los estados.
+Thinking: sentado, mano en barbilla.
+Planning: observando la pieza.
+Building: trabajando sobre el yunque.
+Tool: usando herramienta.
+Reviewing: inspeccionando.
+Complete: junto a la pieza terminada.
+
+Nunca sustituir la persona por un yunque con símbolos.
