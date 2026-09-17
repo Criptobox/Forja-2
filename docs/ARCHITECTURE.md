@@ -1,12 +1,9 @@
-# FORJA — ARCHITECTURE
-
-## Dirección
-
-Arquitectura modular, provider-agnostic y orientada a proyectos.
+# FORJA — ARCHITECTURE TARGET
 
 ```text
 apps/
   web/
+  worker/
 
 packages/
   core/
@@ -19,43 +16,42 @@ packages/
   qa/
   git/
   export/
+
+design/
+docs/
+tests/
+scripts/
 ```
 
-La estructura exacta se validará después de la auditoría de FORJA actual.
+## Principio
 
-## Cerebro
+El usuario no configura el pipeline. El Cerebro lo hace.
 
-```text
-brief
-  ↓
-understand
-  ↓
-art-direction
-  ↓
-site-architecture
-  ↓
-design-contract
-  ↓
-build
-  ↓
-run
-  ↓
-visual-qa
-  ↓
-functional-qa
-  ↓
-code-qa
-  ↓
-refine
-  ↓
-deliver
-```
+## Capas
 
-## Principios
+### Core
+Modelos de proyecto, eventos, estados y contratos.
 
-- La IA escribe archivos reales.
-- Preview y código representan el mismo proyecto.
-- Los proveedores de IA son intercambiables.
-- Las herramientas tienen permisos explícitos.
-- Las operaciones destructivas requieren protección.
-- QA modifica el código real, no crea parches externos.
+### AI
+Interfaz común para distintos proveedores/modelos. Nunca acoplar el producto entero a un único proveedor.
+
+### Agent
+Planificación, ejecución y verificación.
+
+### Tools
+Filesystem, terminal, browser, preview, screenshot, git, search, image generation, analyzer, QA y ZIP.
+
+### Design
+Tokens, tipografía, color, spacing, radii, shadows, motion, componentes y reglas de composición.
+
+### Preview
+Ejecución aislada del proyecto generado y captura de evidencia para QA.
+
+### QA
+Visual, funcional y código.
+
+### Git
+Clonado/importación, ramas, commits, push y publicación mediante credenciales del usuario.
+
+### Export
+ZIP reproducible y limpio, sin secretos.

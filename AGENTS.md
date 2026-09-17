@@ -1,14 +1,14 @@
-# FORJA — REGLAS PARA AGENTES
+# AGENTS — FORJA
 
-1. Leer este archivo y `docs/BUILD_PROGRESS.md` antes de modificar código.
-2. No copiar la arquitectura de FORJA/Prism actual sin auditarla.
-3. No crear parches, `fix-*` o duplicados para corregir problemas.
-4. Corregir directamente la fuente responsable.
-5. No introducir Prism/Prisma branding en el proyecto nuevo.
-6. El usuario no debe tener que seleccionar agentes, design systems o pipelines técnicos.
-7. El Cerebro de FORJA toma esas decisiones internamente.
-8. Toda UI debe ser responsive.
-9. Toda funcionalidad importante debe tener una ruta de prueba.
-10. No declarar una fase terminada sin verificarla.
-11. Mantener actualizado `docs/BUILD_PROGRESS.md`.
-12. Cada entrega comprimida debe conservar la versión y el rango `desde → hasta`.
+## Reglas obligatorias
+
+1. Trabajar directamente sobre el código fuente.
+2. No crear carpetas `fix`, `patch`, `hotfix` ni capas temporales para ocultar errores.
+3. Si algo está mal, corregir la fuente responsable.
+4. No conservar referencias a Prism/Prisma.
+5. No sustituir la mascota-persona por un yunque con iconos.
+6. No convertir FORJA en un chat genérico.
+7. Mantener el flujo prompt corto → sitio terminado.
+8. Las decisiones técnicas deben quedar automatizadas por el Cerebro.
+9. Cada release debe actualizar `VERSION.json` y `docs/BUILD_PROGRESS.md`.
+10. Cada ZIP de release debe indicar claramente FROM → TO.

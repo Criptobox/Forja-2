@@ -1,59 +1,35 @@
-# FORJA — RESEARCH MATRIX
-
-## Fuentes
-
-### FORJA actual
-https://github.com/Criptobox/FORJA-IA
-
-### OpenDesign
-https://github.com/nexu-io/open-design
-
-### Google Stitch
-https://stitch.withgoogle.com/
-
-## FORJA actual
-
-Pendiente de auditoría directa del repositorio completo.
+# RESEARCH MATRIX
 
 ## OpenDesign
 
-Hallazgos públicos iniciales:
+Ideas que FORJA puede adoptar conceptualmente:
 
-- local-first;
-- BYOK;
-- agentes intercambiables;
-- skills basadas en archivos;
-- `DESIGN.md` como contrato de marca;
-- preview sandboxed;
-- exportación HTML/PDF/PPTX/MP4/ZIP;
-- flujo brief → plugin → direction → design system → artifact → handoff → memory.
+- local-first / provider-agnostic;
+- Skills composables;
+- `DESIGN.md` como contrato visual;
+- brief → dirección → sistema de diseño → artefacto → handoff;
+- preview sandbox;
+- archivos reales;
+- exportación;
+- memoria del proyecto.
 
-Estas ideas se tomarán como referencia conceptual, no como copia de arquitectura.
+FORJA no debe copiar su identidad ni asumir que su arquitectura es automáticamente la correcta.
 
 ## Google Stitch
 
-Pendiente de auditoría funcional detallada.
+Ideas de referencia:
 
-Objetivo de estudio:
-
-- generación desde brief;
+- prompt corto;
 - exploración visual;
-- dirección;
-- canvas;
+- dirección de diseño;
 - iteración;
-- design systems;
+- design system;
 - transición diseño → código.
 
-## Matriz
+FORJA debe automatizar las decisiones que otras herramientas dejan al usuario.
 
-| Capacidad | FORJA actual | OpenDesign | Stitch | Decisión FORJA |
-|---|---|---|---|---|
-| Brief → web | Pendiente | Sí | Sí | Implementar |
-| Design contract | Pendiente | DESIGN.md | Design systems | Implementar propio |
-| Skills | Pendiente | SKILL.md | Implícito | Interno, automático |
-| Preview | Sí, auditar | Sí | Sí | Implementar |
-| Sandbox | Auditar | Sí | Auditar | Implementar |
-| GitHub | Sí, auditar | Integraciones | Auditar | Implementar |
-| ZIP | Sí, auditar | Sí | Exportación | Implementar |
-| Mascota Forjador | No | No | No | Identidad propia |
-| Flujo sin configuración técnica | Objetivo | Parcial | Sí | Regla FORJA |
+## Diferenciador FORJA
+
+El flujo interno combina:
+
+`UNDERSTAND → ART DIRECTION → ARCHITECTURE → DESIGN SYSTEM → CONTENT → BUILD → RUN → VISUAL QA → FUNCTIONAL QA → CODE QA → REFINE → DELIVER`

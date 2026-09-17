@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-<title>FORJA mark</title>
-<path fill="currentColor" d="M18 76h92v14H18zM30 62h68l8 14H22zM43 44h42l9 18H34z"/>
-<path fill="currentColor" d="M55 20h18v24H55z"/>
-<path fill="currentColor" d="M37 30h54v10H37z"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M12 45h40M18 45V31h28v14M22 31V20h20v11M27 20v-7h10v7M15 45l5 7h24l5-7"/></svg>

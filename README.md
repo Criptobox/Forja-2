@@ -1,29 +1,30 @@
 # FORJA
 
-Nuevo repositorio de FORJA construido desde cero.
+FORJA es un constructor especializado de sitios web impulsado por IA.
 
-## Estado actual
+## Regla principal
 
-**Versión:** 0.1.0-alpha  
-**Fase:** 0 — Base del proyecto / arquitectura inicial  
-**Origen:** Plan Maestro + análisis público de OpenDesign; auditoría completa de FORJA actual pendiente de incorporar desde su código fuente.
+Una idea corta debe poder convertirse en un sitio web completo, visualmente diseñado, funcional, responsive y descargable.
 
-FORJA es un constructor especializado de sitios web con IA:
+## Estado
 
-> Una idea corta → una web completa, diseñada, funcional, probada y descargable.
+**v0.2.0-alpha**
 
-## Próximo movimiento
+Desde: `repositorio base + documentación + identidad inicial`
 
-Auditar FORJA actual y convertir sus capacidades en una matriz:
+Hasta: `investigación comparativa + arquitectura objetivo + flujo de importación/publicación GitHub preparado`
 
-- conservar
-- rediseñar
-- reescribir
-- eliminar
-- investigar
+## Próximo paso
 
-Después se implementará la arquitectura definitiva sobre esta base limpia.
+`v0.3.0-alpha` — arquitectura técnica implementable + shell inicial.
 
-## Regla
+## Principios
 
-No se crean archivos `fix-*` ni capas de parches para ocultar problemas. Los errores se corrigen en su fuente.
+- Un flujo simple para el usuario.
+- El Cerebro decide las opciones técnicas.
+- Diseño específico para cada tipo de negocio.
+- Nada de capas `fix` o parches acumulativos.
+- Las correcciones se hacen directamente en el código fuente.
+- Preview real y exportación ZIP como funciones de primera clase.
+- GitHub mediante token OAuth/PAT proporcionado por el usuario.
+- Sin secretos dentro del repositorio generado.
