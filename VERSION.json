@@ -1,0 +1,8 @@
+{
+  "name": "FORJA",
+  "version": "0.2.0-alpha",
+  "release_label": "v0.1.0 + v0.2.0 — deployable",
+  "from": "proyecto base + documentación + identidad inicial",
+  "to": "primera aplicación web real desplegable + arquitectura y documentación integradas",
+  "next": "v0.3.0-alpha"
+}

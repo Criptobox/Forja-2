@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="FORJA — AI Web Builder">
+<title>FORJA — AI Web Builder</title>
+<link rel="icon" href="design/logo/forja-mark.svg">
+<link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">F</div><div><strong>FORJA</strong><span>AI Web Builder</span></div></div>
+    <div class="top-status"><i></i> Sistema listo <button id="studioBtn">Web Studio</button></div>
+  </header>
+
+  <main id="home" class="home">
+    <section class="hero">
+      <div class="eyebrow">FROM IDEA TO FINISHED WEBSITE</div>
+      <h1>Tu idea.<br><em>Una web completa.</em></h1>
+      <p class="lead">Describe lo que quieres en una sola frase. FORJA decide la arquitectura, dirección visual, diseño, código y pruebas.</p>
+
+      <div class="prompt-card">
+        <textarea id="prompt" rows="3" placeholder="Ej.: una pizzería con temática de Halloween, elegante y moderna..."></textarea>
+        <div class="prompt-bottom">
+          <span>El Cerebro decide el resto automáticamente.</span>
+          <button id="buildBtn">Forjar web <span>→</span></button>
+        </div>
+      </div>
+
+      <div class="examples">
+        <button>Una cafetería japonesa minimalista</button>
+        <button>Una tienda de zapatillas premium</button>
+        <button>Un hotel boutique frente al mar</button>
+      </div>
+    </section>
+
+    <section class="pipeline">
+      <div class="section-label">EL CEREBRO DE FORJA</div>
+      <div class="steps">
+        <div class="step active"><b>01</b><strong>UNDERSTAND</strong><span>Entender la idea</span></div>
+        <div class="step"><b>02</b><strong>PLAN</strong><span>Arquitectura</span></div>
+        <div class="step"><b>03</b><strong>DESIGN</strong><span>Dirección visual</span></div>
+        <div class="step"><b>04</b><strong>BUILD</strong><span>Código real</span></div>
+        <div class="step"><b>05</b><strong>QA</strong><span>Probar y corregir</span></div>
+        <div class="step"><b>06</b><strong>READY</strong><span>Entregar</span></div>
+      </div>
+    </section>
+  </main>
+
+  <main id="studio" class="studio hidden">
+    <div class="studio-head">
+      <div><button id="backBtn" class="back">← Inicio</button><div class="section-label">WEB STUDIO</div><h2 id="projectTitle">Proyecto FORJA</h2></div>
+      <button id="downloadBtn" class="secondary">↓ Descargar ZIP</button>
+    </div>
+    <div class="studio-grid">
+      <aside class="side card">
+        <div class="side-title">ACTIVIDAD</div>
+        <div id="activity" class="activity">
+          <div class="activity-item current"><span>◉</span><div><b>Thinking</b><small>Esperando una idea</small></div></div>
+          <div class="activity-item"><span>○</span><div><b>Design</b><small>Dirección visual</small></div></div>
+          <div class="activity-item"><span>○</span><div><b>Build</b><small>Generación de código</small></div></div>
+          <div class="activity-item"><span>○</span><div><b>QA</b><small>Validación</small></div></div>
+        </div>
+        <div class="side-title">PROYECTO</div>
+        <div class="tree"><span>⌄</span> src<br><span class="indent">◦</span> index<br><span class="indent">◦</span> styles<br><span>⌄</span> public<br><span>◦</span> package.json</div>
+      </aside>
+      <section class="preview card">
+        <div class="preview-bar"><span>PREVIEW</span><div><button class="device active">Desktop</button><button class="device">Tablet</button><button class="device">Mobile</button></div><button class="secondary small">↻ Refresh</button></div>
+        <div id="sitePreview" class="site-preview">
+          <div class="preview-empty"><img src="design/mascot/forja-forger.svg"><h3>Tu web aparecerá aquí</h3><p>Escribe una idea en Inicio y pulsa «Forjar web».</p></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+<script src="src/app.js"></script>
+</body>
+</html>
