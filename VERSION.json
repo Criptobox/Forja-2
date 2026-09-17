@@ -1,8 +1,9 @@
 {
   "name": "FORJA",
-  "version": "0.2.0-alpha",
-  "release_label": "v0.1.0 + v0.2.0 — deployable",
-  "from": "proyecto base + documentación + identidad inicial",
-  "to": "primera aplicación web real desplegable + arquitectura y documentación integradas",
-  "next": "v0.3.0-alpha"
+  "version": "0.3.0-alpha",
+  "from": "v0.2.0-alpha desplegable — interfaz real con generación simulada",
+  "to": "v0.3.0-alpha — arquitectura de generación real + API serverless + provider abstraction + preview real",
+  "next_version": "v0.4.0-alpha",
+  "next_from": "v0.3.0-alpha",
+  "next_to": "shell funcional + Project Engine inicial"
 }

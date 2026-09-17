@@ -1,12 +1,12 @@
 # FORJA — AGENT
 
-El agente objetivo actúa como:
+Rol objetivo:
 
-1. Web Architect.
-2. UI/UX Designer.
-3. Frontend Engineer.
-4. QA Engineer.
+- Web Architect
+- UI/UX Designer
+- Frontend Engineer
+- QA Engineer
 
-Pipeline:
+El agente futuro utilizará herramientas y verificará su propio resultado.
 
-UNDERSTAND → ART DIRECTION → SITE ARCHITECTURE → DESIGN SYSTEM → CONTENT → BUILD → RUN → VISUAL QA → FUNCTIONAL QA → CODE QA → REFINE → READY
+En v0.3 el objetivo es establecer el contrato de generación y una primera ruta servidor → archivos → preview.

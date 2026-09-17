@@ -1,39 +1,46 @@
 # FORJA — BUILD PROGRESS
 
-## v0.1.0-alpha → v0.2.0-alpha DEPLOYABLE
+## v0.3.0-alpha
 
-**FROM:** proyecto base + documentación + identidad inicial.
+**FROM:** `v0.2.0-alpha desplegable` — interfaz funcionando, pero generación simulada.
 
-**TO:** primera aplicación web real desplegable en Vercel + arquitectura/plan de las fases 1 y 2 integrados.
+**TO:** `v0.3.0-alpha` — primera arquitectura de generación real + API serverless + provider abstraction + preview real.
 
-### Hecho
+### Completado
 
-- [x] Repositorio limpio.
-- [x] Identidad FORJA.
-- [x] Documentación base.
-- [x] Pipeline del Cerebro.
-- [x] Arquitectura objetivo.
-- [x] Design Contract.
-- [x] Mascota-persona.
-- [x] Home web real.
-- [x] Prompt de entrada.
-- [x] Web Studio inicial.
-- [x] Preview inicial.
-- [x] Flujo visual de estados.
-- [x] Responsive.
-- [x] Entrada `index.html` en raíz.
-- [x] Configuración mínima de Vercel.
-- [x] Sin dependencia de framework para este prototipo.
+- [x] Home real.
+- [x] Prompt único.
+- [x] Web Studio.
+- [x] Mascota-persona visible.
+- [x] Pipeline visual.
+- [x] API serverless `/api/generate`.
+- [x] Abstracción de proveedor IA mediante variables de entorno.
+- [x] Fallback local para probar el flujo sin API.
+- [x] Generación de archivos HTML/CSS/JS.
+- [x] Preview real mediante iframe `srcdoc`.
+- [x] Validación básica de archivos devueltos por IA.
+- [x] Separación del backend y secretos.
+- [x] Exportación del resultado generado como ZIP desde el navegador.
+- [x] Documentación de configuración Vercel.
 
-### Próximo
+### Aún no completado
 
-- [ ] v0.3.0-alpha: arquitectura técnica real + shell.
-- [ ] Project Engine.
-- [ ] Preview sandbox real.
-- [ ] Provider abstraction.
-- [ ] Cerebro real.
-- [ ] Design Engine.
-- [ ] QA real.
+- [ ] Project Engine persistente.
+- [ ] Editor de código real.
+- [ ] Terminal sandbox.
+- [ ] Browser QA real.
+- [ ] Screenshot/visual QA real.
+- [ ] Design Engine avanzado.
+- [ ] Memoria de proyecto.
 - [ ] GitHub integrado.
-- [ ] Exportación ZIP real.
-- [ ] Mascota animada integrada.
+- [ ] Control de ramas.
+- [ ] QA automático completo.
+- [ ] Mascota animada final.
+
+## Historial
+
+| Versión | FROM | TO |
+|---|---|---|
+| 0.1.0-alpha | proyecto inexistente | base + documentación + identidad |
+| 0.2.0-alpha | base | interfaz web desplegable |
+| 0.3.0-alpha | interfaz con generación simulada | generación real preparada + preview real |

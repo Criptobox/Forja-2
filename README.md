@@ -1,35 +1,62 @@
-# FORJA IA
+# FORJA IA — v0.3.0-alpha
 
-## v0.1.0 + v0.2.0 — versión desplegable de prueba
+## FROM → TO
 
-Esta entrega reúne el trabajo de las versiones 1 y 2 del plan y, a diferencia de la primera entrega documental, **incluye una aplicación web real en la raíz**.
+**FROM:** `v0.2.0-alpha desplegable` — interfaz real, pero generación simulada.
 
-### FROM → TO
+**TO:** `v0.3.0-alpha` — primera arquitectura de generación real: frontend + API serverless + provider abstraction + generador local de respaldo + Preview REAL del resultado.
 
-**FROM:** `v0.1.0-alpha` — proyecto base, identidad y documentación.
+## Qué hace ahora
 
-**TO:** `v0.2.0-alpha desplegable` — investigación/arquitectura documentada + primera interfaz web real de FORJA lista para probar en Vercel.
+Al escribir:
 
-### Cómo probarla
+> una cafetería japonesa minimalista
 
-1. Sube el contenido de este ZIP a un repositorio nuevo de GitHub.
-2. En Vercel importa ese repositorio.
-3. Vercel debe detectar el proyecto como sitio estático.
-4. No hay que configurar un framework.
-5. La entrada es `index.html`.
+y pulsar **Forjar web**, FORJA llama a `/api/generate`.
 
-### Qué incluye
+Hay dos caminos:
 
-- Home real de FORJA.
-- Caja de prompt.
-- Flujo visual UNDERSTAND → PLAN → DESIGN → BUILD → QA → READY.
-- Web Studio de prueba.
-- Preview simulado.
-- Panel de actividad.
-- Mascota-persona visible.
-- Estados Thinking, Planning, Building, Tool, Reviewing y Complete.
-- Diseño responsive.
-- Documentación del plan y arquitectura.
-- Configuración mínima para Vercel.
+1. **Provider IA configurado:** el endpoint usa las variables de entorno `AI_BASE_URL`, `AI_API_KEY` y `AI_MODEL` y solicita al modelo que devuelva archivos de un sitio.
+2. **Sin API configurada:** FORJA usa un generador local de respaldo para que el flujo siga siendo comprobable en Vercel. No es IA; es un fallback de desarrollo.
 
-> Esta versión es un **prototipo funcional de interfaz**, no pretende fingir que el Cerebro ya genera sitios con IA real. Esa integración viene después.
+El Preview recibe el HTML generado y lo muestra dentro de un iframe aislado.
+
+## Configuración IA en Vercel
+
+En Vercel → Project → Settings → Environment Variables:
+
+- `AI_BASE_URL` — URL de un endpoint compatible con chat/completions.
+- `AI_API_KEY` — secreto del proveedor.
+- `AI_MODEL` — modelo elegido.
+
+No poner estas variables en el repositorio.
+
+Ejemplo conceptual:
+
+```text
+AI_BASE_URL=https://...
+AI_API_KEY=...
+AI_MODEL=...
+```
+
+FORJA no fija el producto a un proveedor único.
+
+## Importante
+
+Esta versión NO pretende que el modelo pueda ejecutar arbitrariamente código en el servidor. La salida del modelo está restringida a archivos de sitio y se valida antes de enviarse al navegador.
+
+La sandbox completa de ejecución, terminal, Git, QA visual y Project Engine vienen en las siguientes fases.
+
+## Despliegue
+
+El repositorio debe tener `index.html` en la raíz y la carpeta `api/`.
+
+Vercel detectará `api/generate.mjs` como función serverless.
+
+## Prueba
+
+1. Deploy sin variables IA.
+2. Escribe una idea.
+3. Pulsa `Forjar web`.
+4. Comprueba que aparece un sitio REAL en Preview.
+5. Después configura el proveedor IA y vuelve a desplegar.

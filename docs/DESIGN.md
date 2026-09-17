@@ -1,14 +1,16 @@
 # FORJA — DESIGN CONTRACT
 
-- Premium, moderno y claro.
-- Composición específica según el negocio.
-- Evitar resultados genéricos.
-- Tarjetas y superficies con separación visual.
-- Responsive desde el inicio.
-- Jerarquía tipográfica clara.
-- Mascota humana visible.
+FORJA busca resultados premium, variados y específicos para el negocio.
 
-## Mascota
+Evitar:
 
-Thinking, Planning, Building, Tool, Reviewing y Complete son estados del MISMO personaje.
-Nunca sustituir la persona por un simple yunque con símbolos.
+- hero + tres tarjetas por defecto;
+- texto de relleno;
+- layouts idénticos;
+- interfaces planas;
+- una sola escala tipográfica;
+- mascota sustituida por iconos.
+
+La mascota es una PERSONA/forjador. Los estados son del mismo personaje:
+
+Thinking, Planning, Building, Tool, Reviewing, Complete.

@@ -1,20 +1,46 @@
-# FORJA — ARCHITECTURE TARGET
+# FORJA — ARCHITECTURE v0.3
 
 ```text
-apps/web
-apps/worker
-packages/core
-packages/ai
-packages/agent
-packages/tools
-packages/design-system
-packages/project
-packages/preview
-packages/qa
-packages/git
-packages/export
+Browser
+  │
+  ├── Home / Web Studio
+  │
+  └── POST /api/generate
+             │
+             ├── provider IA configurado
+             │      └── modelo → JSON de archivos
+             │
+             └── fallback local
+                    └── generador de desarrollo
+
+             ↓
+        validateFiles()
+             ↓
+       Preview iframe
+             ↓
+       ZIP export local
 ```
 
-Esta versión utiliza una interfaz estática deliberadamente sencilla para poder probar la UX en Vercel sin bloquear el avance por infraestructura.
+## Provider abstraction
 
-La arquitectura completa se implementará por fases, sin capas de parches.
+El frontend nunca necesita conocer el proveedor.
+
+El backend usa:
+
+- `AI_BASE_URL`
+- `AI_API_KEY`
+- `AI_MODEL`
+
+El proveedor puede cambiar sin modificar la UX.
+
+## Seguridad
+
+La API key solo existe en el entorno serverless.
+
+La salida se limita a archivos permitidos:
+
+- `index.html`
+- `styles.css`
+- `script.js`
+
+No se permite devolver archivos arbitrarios ni ejecutar herramientas del sistema en esta fase.

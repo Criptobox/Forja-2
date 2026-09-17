@@ -1,19 +1,24 @@
 # FORJA — PRODUCT
 
-FORJA transforma una frase corta en un sitio web terminado.
+## Regla de oro
 
-El usuario no selecciona:
+El usuario escribe una idea corta. FORJA decide el resto.
+
+## No pedir al usuario
 
 - plantilla;
 - agente;
 - modelo;
 - design system;
+- framework;
 - plugins;
 - pipeline;
 - configuración técnica.
 
-El Cerebro toma esas decisiones.
+## Objetivo
+
+`IDEA → UNDERSTAND → PLAN → DESIGN → BUILD → RUN → QA → READY`
 
 ## Calidad
 
-FORJA debe producir composiciones específicas para cada negocio y evitar el patrón repetitivo de hero + tres tarjetas + CTA.
+Cada tipo de negocio debe poder recibir una composición apropiada. FORJA no debe convertir todas las ideas en la misma plantilla.
