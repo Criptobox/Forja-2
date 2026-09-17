@@ -1,0 +1,9 @@
+{
+  "name": "forja",
+  "private": true,
+  "version": "0.1.0-alpha",
+  "description": "FORJA — AI-native web design and building studio",
+  "scripts": {
+    "check": "node scripts/check-project.mjs"
+  }
+}

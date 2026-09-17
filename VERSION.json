@@ -1,0 +1,10 @@
+{
+  "name": "forja",
+  "version": "0.1.0-alpha",
+  "phase": 0,
+  "from": "proyecto inexistente",
+  "to": "repositorio base + documentaci\u00f3n + identidad inicial",
+  "next": "v0.2.0-alpha",
+  "next_from": "v0.1.0-alpha",
+  "next_to": "auditor\u00eda comparativa + arquitectura t\u00e9cnica definitiva"
+}
